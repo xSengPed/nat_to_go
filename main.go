@@ -11,7 +11,7 @@ import (
 func main() {
 	e := echo.New()
 
-	dsn := "host=localhost user=user password=secret dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+	dsn := "host=postgres user=user password=secret dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
