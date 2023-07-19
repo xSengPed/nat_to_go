@@ -1,8 +1,8 @@
 package models
 
 type MathCompetitor struct {
-	Uuid               string  `json:"uuid"`
-	Cid                string  `json:"code"`
+	Uuid               string  `json:"uuid" gorm:"column:uuid"`
+	Cid                string  `json:"code" gorm:"column:cid"`
 	Name               string  `json:"name"`
 	Level              string  `json:"level"`
 	Catergory          string  `json:"catergory"`

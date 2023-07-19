@@ -19,5 +19,7 @@ func Init(e *echo.Echo, db *gorm.DB) {
 	dataRetController := controllers.NewDataRetriverController(*dataRetRepo)
 	dataRetGroup := endPoint
 	dataRetGroup.GET("/get_competitor", dataRetController.GetCompetitors)
+	dataRetGroup.GET("/get_competitor_by_cid", dataRetController.GetCompetitorByCid)
+	dataRetGroup.GET("/get_competitor_paginate", dataRetController.GetCompetitorsPaginate)
 
 }
