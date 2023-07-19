@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"fmt"
 	"nat_backend_go/models"
 
 	"gorm.io/gorm"
@@ -25,13 +24,12 @@ func NewDataRetriverRepo(db *gorm.DB) *DataRetriverRepo {
 
 // receiver function bond GetData() in to DataRetriver Struct it behavior same like class in oop
 func (repo DataRetriverRepo) GetData() (string, error) {
-	fmt.Println("Repo Get Data")
+
 	return "OK", nil
 }
 
 func (repo DataRetriverRepo) GetCompetitorByCid(cid string) (models.MathCompetitor, error) {
-	fmt.Println("Repo Get Data by cid")
-	cid = "1510101498121"
+
 	user := models.MathCompetitor{}
 	err := repo.db.First(&user, "cid = ?", cid).Error
 	if err != nil {

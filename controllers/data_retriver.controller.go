@@ -41,7 +41,10 @@ func (controller DataRetriverController) GetCompetitors(ctx echo.Context) error 
 }
 
 func (controller DataRetriverController) GetCompetitorByCid(ctx echo.Context) error {
-	competitor, err := controller.repository.GetCompetitorByCid("")
+
+	cid := ctx.QueryParam("cid")
+
+	competitor, err := controller.repository.GetCompetitorByCid(cid)
 	if err != nil {
 		return ctx.JSON(http.StatusOK, models.CommonResponse{
 			Code:    2000,
@@ -50,7 +53,6 @@ func (controller DataRetriverController) GetCompetitorByCid(ctx echo.Context) er
 	}
 	return ctx.JSON(http.StatusOK, models.CommonResponse{
 		Code: 1000,
-
 		Data: competitor,
 	})
 }
@@ -60,15 +62,18 @@ func (controller DataRetriverController) GetCompetitorsPaginate(ctx echo.Context
 	page, _ := strconv.Atoi(ctx.QueryParam("page"))
 	limit, _ := strconv.Atoi(ctx.QueryParam("limit"))
 
-	result, _, err := controller.repository.GetCompetitorPaginate(page, limit)
+	result, rowsCount, err := controller.repository.GetCompetitorPaginate(page, limit)
 	if err != nil {
 		return ctx.JSON(http.StatusOK, models.CommonResponse{
 			Code:    2000,
 			Message: "Unable Get Data",
 		})
 	}
-	return ctx.JSON(http.StatusOK, models.CommonResponse{
-		Code: 1000,
-		Data: result,
+	return ctx.JSON(http.StatusOK, models.PaginationResponse{
+		Code:      1000,
+		Data:      result,
+		RowsCount: int64(rowsCount),
+		Page:      int64(page),
+		Limit:     int64(limit),
 	})
 }
