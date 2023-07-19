@@ -9,8 +9,15 @@ import (
 )
 
 func Init(e *echo.Echo, db *gorm.DB) {
+
+	endPoint := e.Group("/api/v1")
 	dataFeedRepo := repository.NewDataFeedingRepo(db)
 	dataFeedController := controllers.InitController(*dataFeedRepo)
-	dataFeedGroup := e.Group("/v1")
+	dataFeedGroup := endPoint.Group("/feed")
 	dataFeedGroup.POST("/upload", dataFeedController.UploadExcel)
+	dataRetRepo := repository.NewDataRetriverRepo(db)
+	dataRetController := controllers.NewDataRetriverController(*dataRetRepo)
+	dataRetGroup := endPoint
+	dataRetGroup.GET("/get_competitor", dataRetController.GetCompetitors)
+
 }

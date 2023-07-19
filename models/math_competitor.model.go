@@ -1,6 +1,7 @@
 package models
 
 type MathCompetitor struct {
+	Uuid               string  `json:"uuid"`
 	Cid                string  `json:"code"`
 	Name               string  `json:"name"`
 	Level              string  `json:"level"`

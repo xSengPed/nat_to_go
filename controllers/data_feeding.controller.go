@@ -10,6 +10,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 	"github.com/xuri/excelize/v2"
 )
@@ -132,6 +133,9 @@ func (controller DataFeedingController) UploadExcel(ctx echo.Context) error {
 			v, _ = excelResult.GetCellValue(sheetName, cell)
 			conv, _ = strconv.ParseFloat(v, 32)
 			competitor.RegionalRank = int(conv)
+
+			uuid := uuid.New()
+			competitor.Uuid = uuid.String()
 
 			competitors = append(competitors, competitor)
 
