@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"nat_backend_go/models"
 
 	"gorm.io/gorm"
@@ -13,6 +14,7 @@ type IDataRetriverRepo interface {
 	GetData() (string, error)
 	GetCompetitorByCid(cid string) (models.MathCompetitor, error)
 	GetCompetitorPaginate(page int, limit int) ([]models.MathCompetitor, int, error)
+	GetCompetitorByRegion(page int, limit int, region string) ([]models.MathCompetitor, error)
 }
 
 // create repo with db gorm which argument is gorm db as instance and return address of struct
@@ -50,5 +52,19 @@ func (repo DataRetriverRepo) GetCompetitorPaginate(page int, limit int) ([]model
 		return competitors, 0, err
 	}
 	return competitors, int(rowsCount), nil
+
+}
+
+func (repo DataRetriverRepo) GetCompetitorByRegion(page int, limit int, region string) ([]models.MathCompetitor, error) {
+	var competitors []models.MathCompetitor
+	offset := (page - 1) * limit
+	err := repo.db.Offset(offset).Limit(limit).Find(&competitors, "region = ?", region).Error
+
+	fmt.Printf("%#v", competitors)
+	if err != nil {
+		return competitors, err
+	}
+
+	return competitors, nil
 
 }

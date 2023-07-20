@@ -21,5 +21,6 @@ func Init(e *echo.Echo, db *gorm.DB) {
 	dataRetGroup.GET("/get_competitor", dataRetController.GetCompetitors)
 	dataRetGroup.GET("/get_competitor_by_cid", dataRetController.GetCompetitorByCid)
 	dataRetGroup.GET("/get_competitor_paginate", dataRetController.GetCompetitorsPaginate)
+	dataRetGroup.GET("/get_competitor_by_region", dataRetController.GetCompetitorByRegion)
 
 }

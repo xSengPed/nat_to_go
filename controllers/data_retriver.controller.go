@@ -77,3 +77,24 @@ func (controller DataRetriverController) GetCompetitorsPaginate(ctx echo.Context
 		Limit:     int64(limit),
 	})
 }
+
+func (controller DataRetriverController) GetCompetitorByRegion(ctx echo.Context) error {
+
+	region := ctx.QueryParam("region")
+
+	page, _ := strconv.Atoi(ctx.QueryParam("page"))
+	limit, _ := strconv.Atoi(ctx.QueryParam("limit"))
+	result, err := controller.repository.GetCompetitorByRegion(page, limit, region)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return ctx.JSON(http.StatusOK, models.PaginationResponse{
+		Code:      1000,
+		Data:      result,
+		RowsCount: 0,
+		Page:      0,
+		Limit:     0,
+	})
+}
